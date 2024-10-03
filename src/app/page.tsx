@@ -1,14 +1,12 @@
 "use client";
 
-import React, { useState } from 'react';
+import React from 'react';
 
 const Home: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedPDF, setSelectedPDF] = useState(""); // Hangi PDF'in görüntüleneceğini belirleyen state
 
-  const openPDF = (pdf: string) => {
-    setSelectedPDF(pdf);
-    setIsOpen(true);
+  // PDF'i yeni bir sekmede açmak için fonksiyon
+  const openPDFInNewTab = (pdf: string) => {
+    window.open(pdf, '_blank'); // Yeni sekmede açar
   };
 
   return (
@@ -29,44 +27,18 @@ const Home: React.FC = () => {
 
         {/* Kataloğu görüntüle butonları */}
         <button 
-          onClick={() => openPDF("pdf/pbkatalog.pdf")} 
+          onClick={() => openPDFInNewTab("pdf/pbkatalog.pdf")} 
           className="py-3 px-6 text-lg bg-gradient-to-r from-[#4d889b] to-[#db0934] text-white border-none rounded cursor-pointer transition duration-300 ease-in-out z-10 mb-2"
         >
           TR KATALOĞU GÖRÜNTÜLE 
         </button>
         <button 
-          onClick={() => openPDF("pdf/pbkatalog2.pdf")} 
+          onClick={() => openPDFInNewTab("pdf/pbkatalog2.pdf")} 
           className="py-3 px-6 text-lg bg-gradient-to-r from-[#4d889b] to-[#db0934] text-white border-none rounded cursor-pointer transition duration-300 ease-in-out z-10 mb-2"
         >
           VIEW EN CATALOGUE
         </button>
       </div>
-
-      {isOpen && (
-        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-20">
-          <div className="relative w-full h-full max-w-[90%] max-h-[90vh] bg-white overflow-auto">
-            <iframe
-              src={selectedPDF} // Seçilen PDF'i iframe'de açıyoruz
-              className="w-full h-full border-collapse shadow-md"
-              title="My PDF"
-              style={{
-                width: '100%',
-                height: '100%',
-                maxHeight: '100vh', // Mobilde ekran yüksekliğini tam kullanmak için
-                maxWidth: '100vw',  // Genişlik ekran sınırlarına uygun
-                overflow: 'auto',   // İçerik taşarsa kaydırma
-              }}
-            />
-            {/* X simgesi ile kapatma butonu */}
-            <button
-              onClick={() => setIsOpen(false)}
-              className="absolute top-2 right-2 bg-transparent border-none text-2xl text-black cursor-pointer"
-            >
-              &times;
-            </button>
-          </div>
-        </div>
-      )}
 
       {/* Responsive ayarlar için @media sorguları */}
       <style jsx>{`
@@ -76,7 +48,7 @@ const Home: React.FC = () => {
             max-width: 300px;
           }
           button {
-            font-size: 14px;
+            font-size: 14px ;
             padding: 10px 20px;
           }
         }
@@ -89,11 +61,6 @@ const Home: React.FC = () => {
             font-size: 12px;
             padding: 8px 16px;
           }
-        }
-        iframe {
-          width: 100%;
-          height: 100%;
-          border: none;
         }
       `}</style>
     </>
