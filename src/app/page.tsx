@@ -44,7 +44,7 @@ const Home: React.FC = () => {
 
       {isOpen && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-20">
-          <div className="relative w-full h-full max-w-[90%] max-h-[90vh] bg-white">
+          <div className="relative w-full h-full max-w-[90%] max-h-[90vh] bg-white overflow-auto">
             <iframe
               src={selectedPDF} // Seçilen PDF'i iframe'de açıyoruz
               className="w-full h-full border-collapse shadow-md"
@@ -52,8 +52,9 @@ const Home: React.FC = () => {
               style={{
                 width: '100%',
                 height: '100%',
-                maxHeight: '90vh', // Mobilde ekran yüksekliğine göre sınır koyuyoruz
-                maxWidth: '90%' // Genişlik ekran sınırlarına uygun
+                maxHeight: '100vh', // Mobilde ekran yüksekliğini tam kullanmak için
+                maxWidth: '100vw',  // Genişlik ekran sınırlarına uygun
+                overflow: 'auto',   // İçerik taşarsa kaydırma
               }}
             />
             {/* X simgesi ile kapatma butonu */}
@@ -88,6 +89,11 @@ const Home: React.FC = () => {
             font-size: 12px;
             padding: 8px 16px;
           }
+        }
+        iframe {
+          width: 100%;
+          height: 100%;
+          border: none;
         }
       `}</style>
     </>
