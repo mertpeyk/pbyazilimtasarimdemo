@@ -14,10 +14,10 @@ const Home: React.FC = () => {
   return (
     <>
       {/* Ekranın ortasında logo ve buton */}
-      <div className="h-screen flex flex-col justify-center items-center bg-cover bg-center" style={{
+      <div className="h-screen flex flex-col justify-center items-center bg-cover bg-center relative" style={{
         backgroundImage: 'url("images/arkaplan.png")' // Arka plan resmi
       }}>
-        {/* Beyaz yuvarlak arka plan */}
+        {/* Beyaz yuvarlak arka plan - dairenin boyutları sabit */}
         <div className="absolute w-[80vw] h-[80vw] max-w-[600px] max-h-[600px] rounded-full bg-white bg-opacity-80 z-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
         
         {/* Logo */}
@@ -38,17 +38,23 @@ const Home: React.FC = () => {
           onClick={() => openPDF("pdf/pbkatalog2.pdf")} 
           className="py-3 px-6 text-lg bg-gradient-to-r from-[#4d889b] to-[#db0934] text-white border-none rounded cursor-pointer transition duration-300 ease-in-out z-10 mb-2"
         >
-          EN KATALOĞU GÖRÜNTÜLE 
+          VIEW EN CATALOGUE
         </button>
       </div>
 
       {isOpen && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-20">
-          <div className="relative w-full h-full max-w-[90%] max-h-[700px] bg-white">
+          <div className="relative w-full h-full max-w-[90%] max-h-[90vh] bg-white">
             <iframe
               src={selectedPDF} // Seçilen PDF'i iframe'de açıyoruz
               className="w-full h-full border-collapse shadow-md"
               title="My PDF"
+              style={{
+                width: '100%',
+                height: '100%',
+                maxHeight: '90vh', // Mobilde ekran yüksekliğine göre sınır koyuyoruz
+                maxWidth: '90%' // Genişlik ekran sınırlarına uygun
+              }}
             />
             {/* X simgesi ile kapatma butonu */}
             <button
@@ -60,6 +66,30 @@ const Home: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Responsive ayarlar için @media sorguları */}
+      <style jsx>{`
+        @media (max-width: 768px) {
+          img {
+            width: 60%;
+            max-width: 300px;
+          }
+          button {
+            font-size: 14px;
+            padding: 10px 20px;
+          }
+        }
+        @media (max-width: 480px) {
+          img {
+            width: 50%;
+            max-width: 200px;
+          }
+          button {
+            font-size: 12px;
+            padding: 8px 16px;
+          }
+        }
+      `}</style>
     </>
   );
 };
